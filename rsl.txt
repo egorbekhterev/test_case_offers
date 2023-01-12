@@ -1,0 +1,6 @@
+Здравствуйте, дорогая и.о. секретаря
+За последние сутки во вверенных Вам сайтах произошли следующие изменения:
+Появились следующие новые страницы: [https://career.habr.com/vacancies/java_developer?=page4]
+Изменились следующие страницы: [https://career.habr.com/vacancies/java_developer?=page5, https://career.habr.com/vacancies/java_developer?=page1]
+Исчезли следующие страницы: [https://career.habr.com/vacancies/java_developer?=page2, https://career.habr.com/vacancies/java_developer?=page3]
+С уважением, автоматизированная система мониторинга.
