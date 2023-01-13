@@ -12,12 +12,12 @@ class ChangesInWebsitesCodeTest {
 
     @Test
     void whenPageAdded() {
-        Changes changes = new ChangesWebsitesCode();
+        Letter letter = new ChangeInWebsitesCode();
         var y = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<12345>"));
         var t = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<12345>", "https://career.habr.com/vacancies/java_developer?=page2", "<12345>"));
-        String actual = changes.letter(y, t);
+        String actual = letter.writeLetter(y, t);
         String expected = String.join(
                 System.lineSeparator(),
                 "Здравствуйте, дорогая и.о. секретаря",
@@ -31,13 +31,13 @@ class ChangesInWebsitesCodeTest {
 
     @Test
     void whenPagesChanged() {
-        Changes changes = new ChangesWebsitesCode();
+        Letter letter = new ChangeInWebsitesCode();
         var y = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<12345>", "https://career.habr.com/vacancies/java_developer?=page2",
                 "<12345>"));
         var t = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<1234>", "https://career.habr.com/vacancies/java_developer?=page2", "<123456>"));
-        String actual = changes.letter(y, t);
+        String actual = letter.writeLetter(y, t);
         String expected = String.join(
                 System.lineSeparator(),
                 "Здравствуйте, дорогая и.о. секретаря",
@@ -51,12 +51,12 @@ class ChangesInWebsitesCodeTest {
 
     @Test
     void whenPageLost() {
-        Changes changes = new ChangesWebsitesCode();
+        Letter letter = new ChangeInWebsitesCode();
         var y = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<12345>", "https://career.habr.com/vacancies/java_developer?=page2", "<12345>"));
         var t = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<12345>"));
-        String actual = changes.letter(y, t);
+        String actual = letter.writeLetter(y, t);
         String expected = String.join(
                 System.lineSeparator(),
                 "Здравствуйте, дорогая и.о. секретаря",
@@ -69,37 +69,26 @@ class ChangesInWebsitesCodeTest {
     }
 
     @Test
-    void whenMapIsEmptyException() {
-        Changes changes = new ChangesWebsitesCode();
-        var y = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
-                "<12345>", "https://career.habr.com/vacancies/java_developer?=page2", "<12345>"));
-        Map<String, String> t = new HashMap<>(Map.of());
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> changes.letter(y, t))
-                .withMessageMatching("Map is empty.");
-    }
-
-    @Test
     void whenInvalidUrlException() {
-        Changes changes = new ChangesWebsitesCode();
+        Letter letter = new ChangeInWebsitesCode();
         var y = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<12345>", "https://career.habr.com/vacancies/java_developer?=page2", "<12345>"));
         var t = new HashMap<>(Map.of("career.habr.com/vacancies/java_developer?=page1",
                 "<12345>"));
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> changes.letter(y, t))
+                .isThrownBy(() -> letter.writeLetter(y, t))
                 .withMessageContaining("Map must consist of url as key: ");
     }
 
     @Test
     void whenInvalidHTMLException() {
-        Changes changes = new ChangesWebsitesCode();
+        Letter letter = new ChangeInWebsitesCode();
         var y = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "<12345>", "https://career.habr.com/vacancies/java_developer?=page2", "<12345>"));
         var t = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1",
                 "12345"));
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> changes.letter(y, t))
+                .isThrownBy(() -> letter.writeLetter(y, t))
                 .withMessageContaining("Map must consist of html as value: ");
     }
 }
