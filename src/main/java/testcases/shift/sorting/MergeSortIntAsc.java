@@ -1,14 +1,11 @@
 package testcases.shift.sorting;
 
-import testcases.shift.data.Data;
-
 import java.io.IOException;
 
 public class MergeSortIntAsc implements Sort<Integer> {
 
     @Override
-    public Integer[] sort(Data<Integer> data) throws IOException {
-        var array = data.insert();
+    public Integer[] sort(Integer[] array) {
         return sortMerge(array);
     }
 
@@ -20,7 +17,7 @@ public class MergeSortIntAsc implements Sort<Integer> {
         if (from == to) {
             return new Integer[]{array[from]};
         }
-        int mid = (from + to) / 2;
+        int mid = from + (to - from) / 2;
         return merge(
                 sort(array, from, mid),
                 sort(array, mid + 1, to)
