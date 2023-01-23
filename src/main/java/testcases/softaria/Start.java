@@ -21,7 +21,7 @@ public class Start {
         Map<String, String> mapT = new HashMap<>(Map.of("https://career.habr.com/vacancies/java_developer?=page1", "<1234>",
                 "https://career.habr.com/vacancies/java_developer?=page4", "<12345>",
                 "https://career.habr.com/vacancies/java_developer?=page5", "<12345>"));
-        try (FileOutputStream out = new FileOutputStream("rsl.txt")) {
+        try (FileOutputStream out = new FileOutputStream("src/main/java/testcases/softaria/files/rsl.txt")) {
             out.write(letter.writeLetter(mapY, mapT).getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
