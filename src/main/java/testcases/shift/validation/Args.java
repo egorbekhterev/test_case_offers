@@ -16,9 +16,10 @@ public class Args implements Validation {
 
     @Override
     public void validate(String[] args) {
-        if (args.length < 2) {
-            throw new IllegalArgumentException("Insufficient number of parameters to "
-                    + "realize the program, there should be at least 3 parameters.");
+        if (args.length < 3) {
+            throw new IllegalArgumentException(String.format("Insufficient number of parameters to "
+                    + "realize the program, there should be at least 3 parameters. "
+                    + "Current args length: %s", args.length));
         }
         for (String arg : args) {
             if (!arg.startsWith("-") && !arg.matches(".*\\.txt")) {
@@ -48,41 +49,41 @@ public class Args implements Validation {
     @Override
     public void accomplish(String[] args) throws IOException {
         validate(args);
-        List<String> list = new ArrayList<>();
-        List<String> txt = new ArrayList<>();
+        List<String> typeArguments = new ArrayList<>();
+        List<String> fileTxtArguments = new ArrayList<>();
         for (String arg : args) {
-            if (arg.startsWith("-")) {
-                list.add(arg);
+            if (arg.startsWith("-") && arg.length() == 2) {
+                typeArguments.add(arg);
             } else {
-                txt.add(arg);
+                fileTxtArguments.add(arg);
             }
         }
-        if (list.contains("-s")) {
-            Input<String> stringInput = new FileReadingString(txt.subList(1, txt.size()));
+        if (typeArguments.contains("-s")) {
+            Input<String> stringInput = new FileReadingString(fileTxtArguments.subList(1, fileTxtArguments.size()));
             Sort<String> stringSort = new MergeSortStringAsc();
             var array = stringSort.sort(stringInput.readFile());
-            Output<String> stringOutput = new FileWritingString(txt.get(0));
+            Output<String> stringOutput = new FileWritingString(fileTxtArguments.get(0));
             stringOutput.printFile(array);
         }
-        if (list.contains("-i")) {
-            Input<Integer> integerInput = new FileReadingInt(txt.subList(1, txt.size()));
+        if (typeArguments.contains("-i")) {
+            Input<Integer> integerInput = new FileReadingInt(fileTxtArguments.subList(1, fileTxtArguments.size()));
             Sort<Integer> integerSort = new MergeSortIntAsc();
             var array = integerSort.sort(integerInput.readFile());
-            Output<Integer> integerOutput = new FileWritingInt(txt.get(0));
+            Output<Integer> integerOutput = new FileWritingInt(fileTxtArguments.get(0));
             integerOutput.printFile(array);
         }
-        if (list.contains("-d") && list.contains("-s")) {
-            Input<String> stringInput = new FileReadingString(txt.subList(1, txt.size()));
+        if (typeArguments.contains("-d") && typeArguments.contains("-s")) {
+            Input<String> stringInput = new FileReadingString(fileTxtArguments.subList(1, fileTxtArguments.size()));
             Sort<String> stringSort = new MergeSortStringDesc();
             var array = stringSort.sort(stringInput.readFile());
-            Output<String> stringOutput = new FileWritingString(txt.get(0));
+            Output<String> stringOutput = new FileWritingString(fileTxtArguments.get(0));
             stringOutput.printFile(array);
         }
-        if (list.contains("-d") && list.contains("-i")) {
-            Input<Integer> integerInput = new FileReadingInt(txt.subList(1, txt.size()));
+        if (typeArguments.contains("-d") && typeArguments.contains("-i")) {
+            Input<Integer> integerInput = new FileReadingInt(fileTxtArguments.subList(1, fileTxtArguments.size()));
             Sort<Integer> integerSort = new MergeSortIntDesc();
             var array = integerSort.sort(integerInput.readFile());
-            Output<Integer> integerOutput = new FileWritingInt(txt.get(0));
+            Output<Integer> integerOutput = new FileWritingInt(fileTxtArguments.get(0));
             integerOutput.printFile(array);
         }
     }

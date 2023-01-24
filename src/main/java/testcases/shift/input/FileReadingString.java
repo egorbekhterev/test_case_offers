@@ -1,9 +1,6 @@
 package testcases.shift.input;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,21 +13,12 @@ public class FileReadingString implements Input<String> {
     }
 
     @Override
-    public String[] readFile() throws IOException {
+    public String[] readFile() {
         List<String> list = new ArrayList<>();
-        List<File> filesInFolder = Files.walk(Paths.get("./src/main/java/testcases/shift/files/in/"))
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .filter(file -> {
-                    boolean rsl = false;
-                    for (String input : inputPath) {
-                        if (file.getName().matches(input)) {
-                            rsl = true;
-                        }
-                    }
-                    return rsl;
-                })
-                .toList();
+        List<File> filesInFolder = new ArrayList<>();
+        for (String input : inputPath) {
+            filesInFolder.add(new File(input));
+        }
         for (File file : filesInFolder) {
             try (BufferedReader in = new BufferedReader(new FileReader(file))) {
                 in.lines()

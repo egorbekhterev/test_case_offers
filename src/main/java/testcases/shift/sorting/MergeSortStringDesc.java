@@ -1,7 +1,5 @@
 package testcases.shift.sorting;
 
-import java.io.IOException;
-
 public class MergeSortStringDesc implements Sort<String> {
 
     @Override

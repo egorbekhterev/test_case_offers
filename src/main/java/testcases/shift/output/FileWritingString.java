@@ -1,7 +1,6 @@
 package testcases.shift.output;
 
-import testcases.shift.output.Output;
-
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +16,9 @@ public class FileWritingString implements Output<String> {
     @Override
     public void printFile(String[] array) {
         try (PrintWriter printWriter = new PrintWriter(
-                new FileOutputStream("./src/main/java/testcases/shift/files/out/".concat(outputPath)))) {
+                new BufferedOutputStream(
+                        new FileOutputStream(outputPath)
+                ))) {
             for (String s : array) {
                 printWriter.println(s);
             }
