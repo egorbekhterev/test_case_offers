@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Data</title>
+    <script src="createXML.js"></script>
+    <script src="validateForm.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <form id="person">
+        <div class="container">
+            <p>Форма запроса</p>
+            <div>
+                <label for="lastName">Фамилия</label>
+                <input type="text" id="lastName" name="lastName"/>
+            </div>
+            <div>
+                <label for="firstName">Имя</label>
+                <input type="text" id="firstName" name="firstName"/>
+            </div>
+            <div>
+                <label for="middleName">Отчество</label>
+                <input type="text" id="middleName" name="middleName"/>
+            </div>
+            <div>
+                <label for="insuranceNumber">СНИЛС</label>
+                <input type="text" id="insuranceNumber" name="insuranceNumber"/>
+            </div>
+            <div>
+                <label for="dateOfBirth">Дата рождения</label>
+                <input type="text" id="dateOfBirth" name="dateOfBirth"/>
+            </div>
+            <div>
+                <label for="dataAvailability">Наличие данных</label>
+                <select id="dataAvailability" name="dataAvailability">
+                    <option value=""></option>
+                    <option value="Yes">Да</option>
+                    <option value="No">Нет</option>
+                </select>
+            </div>
+            <p>Общая продолжительность страхового стажа на дату обращения гражданина</p>
+            <div>
+                <label for="insuranceExperienceYear">Общая продолжительность страхового стажа лет</label>
+                <input type="text" id="insuranceExperienceYear" name="insuranceExperienceYear"/>
+            </div>
+            <div>
+                <label for="insuranceExperienceMonth">Общая продолжительность страхового стажа месяцев</label>
+                <input type="text" id="insuranceExperienceMonth" name="insuranceExperienceMonth"/>
+            </div>
+            <div>
+                <label for="insuranceExperienceDay">Общая продолжительность страхового стажа месяцев</label>
+                <input type="text" id="insuranceExperienceDay" name="insuranceExperienceDay"/>
+            </div>
+        </div>
+        <div class="container_button">
+            <button type="submit" id="saveButton">Сохранить</button>
+        </div>
+        <div class="container">
+            <p>Итоговый запрос</p>
+            <div>
+                <label for="request">Запрос</label>
+                <textarea id="request" name="request"></textarea>
+            </div>
+        </div>
+    </form>
+<script>
+    const form = document.getElementById('person');
+    const saveButton = document.getElementById('saveButton');
+
+    saveButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (validateForm(form)) {
+            const xmlDocument = createXmlDocument(form);
+            const xmlString = new XMLSerializer().serializeToString(xmlDocument);
+            const requestTextArea = document.getElementById('request');
+            requestTextArea.value = xmlString;
+        }
+    });
+</script>
+</body>
+</html>
